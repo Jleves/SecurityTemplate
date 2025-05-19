@@ -21,6 +21,8 @@ public class JWTUtil {
         this.appProperties = appProperties;
     }
 
+
+
     private Key getSignInKey() {
         String secret = appProperties.getSecurity().getJwt().getSecret();
         byte[] keyBytes = Decoders.BASE64.decode(secret);
@@ -61,12 +63,12 @@ public class JWTUtil {
 
     // Podés agregar claims personalizados (roles, permisos, etc.)
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-
+        long expiracionTime= appProperties.getSecurity().getJwt().getAccessExpirationMinutes() * 60000;
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // 1 hora
+                .setExpiration(new Date(System.currentTimeMillis() + expiracionTime))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
