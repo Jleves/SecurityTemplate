@@ -1,6 +1,7 @@
 package com.Security.demo.Service.Auth;
 
 import com.Security.demo.Dto.UserDTO;
+import com.Security.demo.Exception.JWT.InvalidCredentialsException;
 import com.Security.demo.Model.Auth.AuthResponse;
 import com.Security.demo.Model.Auth.LoginRequest;
 import com.Security.demo.Model.User;
@@ -78,8 +79,7 @@ public class AuthService {
 
 
         }catch (AuthenticationException ex) {
-            throw new RuntimeException("Password o usuario incorrecto");
-
+            throw new InvalidCredentialsException("Usuario o contraseña incorrectos");
         }
 
 
