@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
@@ -57,7 +56,7 @@ public class AuthController {
                     UserDetails userDetails = user;
 
                     String newAccessToken = jwtUtil.generateToken(userDetails);
-                    String newRefreshToken = refreshTokenService.createRefreshToken(user.getUsername()).getToken();
+                    String newRefreshToken = refreshTokenService.createRefreshToken(user.getUsername(), user.getId()).getToken();
 
                     return ResponseEntity.ok(new TokenRefreshResponse(newAccessToken, newRefreshToken));
                 })

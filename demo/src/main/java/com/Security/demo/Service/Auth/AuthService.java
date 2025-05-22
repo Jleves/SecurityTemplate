@@ -60,10 +60,10 @@ public class AuthService {
             userDTO.setUsername(user.getUsername());
             userDTO.setRol(user.getRol().getAuthority());
 
-            String token = jwtUtil.generateToken(user);
+            String token = jwtUtil.generateToken(userDetails);
 
-            System.out.println("User detal antes de crear el refresh token :   --->    " + userDetails.getUsername());
-            String refreshToken = refreshTokenService.createRefreshToken(userDetails.getUsername()).getToken();
+            System.out.println("User details antes de crear el refresh token :   --->    " + userDetails.getUsername());
+            String refreshToken = refreshTokenService.createRefreshToken(userDetails.getUsername(), user.getId()).getToken();
             System.out.println("Refresh token :   --->    " + refreshToken);
             Long expiration= appProperties.getSecurity().getJwt().getAccessExpirationMinutes()*60;
 
